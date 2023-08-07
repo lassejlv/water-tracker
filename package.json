@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@prisma/client": "5.1.1",
-    "discord.js": "^14.12.1"
+    "discord.js": "^14.12.1",
+    "term-logger": "^1.1.8"
   }
 }

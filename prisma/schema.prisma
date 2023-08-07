@@ -16,7 +16,6 @@ model User {
   glasses              Int?     @default(0)
   glassesCompleted     Int?     @default(0)
   completed            Boolean? @default(false)
-  notificationsEnabled Boolean? @default(true)
   lastAddedGlass       String?
   lastNotification     String?
   nextDailyGoalReset   String?

@@ -58,11 +58,13 @@ export async function execute(interaction) {
       {
         name: "Daily Goal",
         value: `\`${checkIfUserExists.glasses}\``,
+        inline: true,
       },
 
       {
         name: "Streak",
         value: `\`${checkIfUserExists.streak}\``,
+        inline: true,
       },
     ])
 
@@ -77,19 +79,6 @@ export async function execute(interaction) {
           .setCustomId("glasses")
           .setLabel("Set Daily Goal")
           .setStyle(ButtonStyle.Primary),
-
-        new ButtonBuilder()
-          .setCustomId("notifications")
-          .setLabel(
-            `${
-              checkIfUserExists.notificationsEnabled ? "Disable" : "Enable"
-            } Notifications`
-          )
-          .setStyle(
-            checkIfUserExists.notificationsEnabled
-              ? ButtonStyle.Danger
-              : ButtonStyle.Success
-          ),
 
         new ButtonBuilder()
           .setCustomId("add_glass")
@@ -144,10 +133,6 @@ export async function execute(interaction) {
         break;
       }
 
-      case "notifications": {
-        break;
-      }
-
       case "add_glass": {
         // Add a glass
         await prisma.user.update({
@@ -157,6 +142,13 @@ export async function execute(interaction) {
 
           data: {
             glassesCompleted: checkIfUserExists.glassesCompleted + 1,
+            lastAddedGlass: `${new Date().toISOString()}}`,
+            // if the it is the users first glass of the day, nextDailyGoalReset is from now and plus 24 hours
+            ...(checkIfUserExists.glassesCompleted === 0 && {
+              nextDailyGoalReset: new Date(
+                Date.now() + 24 * 60 * 60 * 1000
+              ).toISOString(),
+            }),
           },
         });
 
